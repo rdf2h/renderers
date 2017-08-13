@@ -1,0 +1,200 @@
+@base <http://zazukoians.org/2016/generic-rdf2h-matchers/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix r2h: <http://rdf2h.github.io/2015/rdf2h#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/>.
+@prefix s: <http://schema.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix zzm: <http://zz2h.zazukoians.org/modes/> .
+@prefix zz2h: <http://zz2h.zazukoians.org/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix r2hp: <http://rdf2h.github.io/2015/rdf2h-points/> .
+
+r2hp:fallback r2h:before <header> .
+
+<header> a r2h:Matcher ;
+  r2h:template [
+    r2h:context r2h:Default;
+    r2h:mustache '''
+      <div id="sticky-anchor"></div>
+      <div id="sticky" class="list-group" style="width: 100%;">
+          <h4 class="list-group-item-heading">Resource: {{.}}</h4>
+      </div>
+         {{{:continue}}}'''
+  ];
+  r2h:before <rdfTypes>.
+  
+<rdfTypes> a r2h:Matcher ;
+  r2h:triplePattern [
+    r2h:subject r2h:this;
+    r2h:predicate rdf:type;
+  ];
+  r2h:template [
+    r2h:context r2h:Default;
+    r2h:mustache '''
+      <div id="sticky-anchor"></div>
+      <div id="sticky" class="list-group" style="width: 100%;">
+          <p class="list-group-item-text">is a {{#rdf:type}}<a href="{{.}}">{{.}}</a> {{/rdf:type}}</p>
+		  <hr>
+      </div>
+         {{{:continue}}}'''
+  ];
+  r2h:before <catchall>.
+
+<catchall> a r2h:Matcher ;
+  r2h:template [
+    rdfs:comment '''Renders a full page, delegating to matchers in the default 
+    context for the body, and to zzm:HtmlHead for things like the html title''';
+    r2h:context zzm:FullPage;
+    r2h:mustache '''
+    {{{@prefix r2h: <http://rdf2h.github.io/2015/rdf2h#>}}}
+    {{{@prefix zzm: <http://zz2h.zazukoians.org/modes/>}}}
+    <head>
+      {{{:render . zzm:HtmlHead}}}
+    </head>
+    <body>
+        {{{:render . zzm:HtmlBody}}}
+    </body>
+    '''
+  ];
+  r2h:template [
+    r2h:context zzm:HtmlBody;
+    r2h:mustache '''<div id="header">trifid-ld</div>
+        {{{:render . r2h:Default}}}<div id="footer">
+            <table align="center" width="30%">
+              <tr>
+                <td colspan="2">Powered by</td>
+              </tr>
+              <tr>
+                <td><a href="http://zazuko.com"><img src="/img/zazuko-logo.png" width="150px"></a></td>
+                <td><a href="http://synapta.it"><img src="/img/synapta-logo.svg" width="150px"></a></td>
+              </tr>
+            </table>
+            <br>
+            Code on <a href="https://github.com/zazukoians/trifid-ld" style="color:white"><b>github</b></a>
+        </div>'''
+  ];
+    r2h:template [
+        r2h:context zzm:HtmlHead;
+        r2h:mustache '''
+            <link rel="stylesheet" href="/css/bootstrap.css" />
+            <link rel="stylesheet" href="/css/custom.css" />
+            <script src="/js/bootstrap.js"</script>
+            <script src="/js/sticky.js"></script>
+            {{{:render . zzm:HtmlTitle}}}
+        '''
+   ];
+    r2h:template [
+        r2h:context zzm:HtmlTitle;
+        r2h:mustache '''
+          <title>Resource {{.}}</title>
+    '''
+  ];
+  r2h:template [
+    r2h:context r2h:Default;
+    r2h:javaScript '''function(n) {
+        //alert(n.graph);
+        //alert(n.node);
+        var prefixes = [{url: "http://schema.org/", shortcut: "s:"},
+                        {url: "http://www.w3.org/1999/02/22-rdf-syntax-ns#", shortcut: "rdf:"},
+                        {url: "https://gont.ch/", shortcut: "gont:"},
+                        {url: "http://www.w3.org/2004/02/skos/core#", shortcut: "skos:"},
+                        {url: "http://www.w3.org/2002/07/owl#", shortcut: "owl:"},
+                        {url: "http://dbpedia.org/resource/", shortcut: "dbr:"},
+                        {url: "http://dbpedia.org/class/yago/", shortcut: "yago:"},
+                        {url: "http://xmlns.com/foaf/0.1/", shortcut: "foaf:"},
+                        {url: "http://www.wikidata.org/entity/", shortcut: "wikidata:"},
+                        {url: "http://dbpedia.org/ontology/", shortcut: "dbo:"},
+                        {url: "http://purl.org/dc/terms/", shortcut: "dct:"},
+                        {url: "http://www.w3.org/2000/01/rdf-schema#", shortcut: "rdfs:"}];
+        var result = "";
+        var first = 0;
+        var firstDash = -1;
+        var predicatesArray = [];
+        var blankBack = [];
+        var nodesToRender = [];
+		if (!n.rdf2h.renderedNodesToId)  {
+			n.rdf2h.renderedNodesToId = new Object();
+		}
+        var node = n.node;
+        var s = n.graph.filter(function(t) {return t.subject.equals(node)}).toArray();
+        if (s.length > 0) {
+           n.rdf2h.renderedNodesToId[node.toString()] = true;
+           if (first > 0) {
+               result += '<hr class="baffone">';
+               if (blankBack[first-1] !== undefined) {
+                   result += '<div align="center">'+blankBack[first-1]+'</div>';
+               } else {
+                   var newSub = s[0].subject.nominalValue;
+                   result += '<div align="center"><a href="'+newSub+'">'+newSub+'</a></div>';
+               }
+               predicatesArray = [];
+               firstDash = -1;
+           }
+           result += '<div class="container" id="'+node+'"><table id="tt" width="100%">';
+           first++;
+           s.forEach(function(t) {
+            var objectHtml;
+            var prefix = "";
+            var predicate = t.predicate.toString();
+            var link = predicate;
+            prefixes.forEach(function(p) {
+                var predicateHtml = predicate.split(p.url);
+                if (predicateHtml[0] === "") {
+                    prefix = p.shortcut;
+                    predicate = predicateHtml[1];
+                }
+            });
+            if ((t.object.interfaceName != "Literal") && (!n.rdf2h.renderedNodesToId[t.object.toString()]) 
+					&& (n.graph.filter(function(gt) {return gt.subject.equals(t.object)}).toArray().length > 0)) {
+                nodesToRender.push(t.object);
+				n.rdf2h.renderedNodesToId[t.object.toString()] = true;
+                if (t.object.interfaceName == "BlankNode") {
+                    objectHtml = '<div id="blank' + first + '" class="moving"></div><a onclick=\\'$("#'+t.object+'")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
+                    returnObjectLink = '<a onclick=\\'$("#blank' + first + '")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
+                    blankBack.push('<table width="30%"><tr><td>'+prefix+'<b>'+predicate+'</b></td><td>'+returnObjectLink+'</td></tr></table><br>');
+                } else {
+                    var objectPrefix = "";
+                    var object = t.object.toString().replace(/&/g,"&amp;");
+                    var objectLink = object;
+                    prefixes.forEach(function(p) {
+                        var objectSplit = object.split(p.url);
+                        if (objectSplit[0] === "") {
+                            objectPrefix = p.shortcut;
+                            object = objectSplit[1];
+                        }
+                    });
+                    if (objectPrefix === "") {
+                        objectHtml = '<a href="'+objectLink+'" title="'+objectLink+'">'+object+'</a>';
+                    } else {
+                        objectHtml = '<a href="'+objectLink+'" title="'+objectLink+'" style="color:#000000;text-decoration:none">'+objectPrefix+'<b>'+object+'</b></a>';
+                    }
+                }
+            } else {
+                objectHtml = t.object;
+            }
+            var isNew = true;
+            for (var i = 0; i < predicatesArray.length; i++) {
+                if (predicatesArray[i] === predicate) {
+                    isNew = false;
+                    break;
+                }
+            }
+            predicatesArray.push(predicate);
+
+                if (firstDash === 0) {
+                    result += '<hr /></td>'
+                }
+                result += '<tr><td width="35%" cellpadding=".1em" valign="top" id="sticky"><a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+objectHtml+'<hr /></td>';
+                firstDash = 1;
+
+            });
+           result += '</table></div>';
+        };
+		while (nodesToRender.length > 0) {
+           var node = nodesToRender.pop();
+		   result += n.rdf2h.render(n.graph, node, n.context);
+		}
+        return result;
+    }'''
+  ].
