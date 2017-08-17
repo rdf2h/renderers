@@ -61,17 +61,7 @@ r2hp:fallback r2h:before <header> .
     r2h:context zzm:HtmlBody;
     r2h:mustache '''<div id="header">trifid-ld</div>
         {{{:render . r2h:Default}}}<div id="footer">
-            <table align="center" width="30%">
-              <tr>
-                <td colspan="2">Powered by</td>
-              </tr>
-              <tr>
-                <td><a href="http://zazuko.com"><img src="/img/zazuko-logo.png" width="150px"></a></td>
-                <td><a href="http://synapta.it"><img src="/img/synapta-logo.svg" width="150px"></a></td>
-              </tr>
-            </table>
-            <br>
-            Code on <a href="https://github.com/zazukoians/trifid-ld" style="color:white"><b>github</b></a>
+
         </div>'''
   ];
     r2h:template [
