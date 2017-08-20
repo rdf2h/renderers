@@ -153,9 +153,9 @@ r2hp:fallback r2h:before <header> .
                         }
                     });
                     if (objectPrefix === "") {
-                        objectHtml = '<a href="'+objectLink+'" title="'+objectLink+'">'+object+'</a>';
+                        objectHtml = '<a href="'+object+'" title="'+object+'">'+object+'</a>';
                     } else {
-                        objectHtml = '<a href="'+objectLink+'" title="'+objectLink+'" style="color:#000000;text-decoration:none">'+objectPrefix+'<b>'+object+'</b></a>';
+                        objectHtml = '<a href="'+object+'" title="'+object+'" style="color:#000000;text-decoration:none">'+objectPrefix+'<b>'+object+'</b></a>';
                     }
                 }
             } else {
@@ -173,7 +173,7 @@ r2hp:fallback r2h:before <header> .
                 if (firstDash === 0) {
                     result += '<hr /></td>'
                 }
-                result += '<tr><td width="35%" cellpadding=".1em" valign="top" id="sticky"><a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em"><a href="'+objectHtml+'" title="'+objectHtml+'" style="color:#000000;text-decoration:none">'+objectHtml+'</a><hr /></td>';
+                result += '<tr><td width="35%" cellpadding=".1em" valign="top" id="sticky"><a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+objectHtml+'<hr /></td>';
                 firstDash = 1;
 
             });
