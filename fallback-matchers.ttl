@@ -161,10 +161,12 @@ r2hp:fallback r2h:before <header> .
             });
            result += '</table></div>';
         };
-		while (nodesToRender.length > 0) {
-           var node = nodesToRender.pop();
-		   result += n.rdf2h.render(n.graph, node, n.context);
-		}
+        while (nodesToRender.length > 0) {
+            var node = nodesToRender.pop();
+            if (n.graph.filter(function(gt) {return gt.subject.equals(node)}).toArray().length > 0) {
+		result += n.rdf2h.render(n.graph, node, n.context);
+            }
+	}
         return result;
     }'''
   ].
