@@ -133,8 +133,7 @@ r2hp:fallback r2h:before <header> .
                     predicate = predicateHtml[1];
                 }
             });
-            if ((t.object.interfaceName != "Literal") && (!n.rdf2h.renderedNodesToId[t.object.toString()]) 
-					&& (n.graph.filter(function(gt) {return gt.subject.equals(t.object)}).toArray().length > 0)) {
+            if ((t.object.interfaceName != "Literal") && (!n.rdf2h.renderedNodesToId[t.object.toString()])) {
                 nodesToRender.push(t.object);
 				n.rdf2h.renderedNodesToId[t.object.toString()] = true;
                 if (t.object.interfaceName == "BlankNode") {
@@ -153,9 +152,9 @@ r2hp:fallback r2h:before <header> .
                         }
                     });
                     if (objectPrefix === "") {
-                        objectHtml = '<a href="'+object+'" title="'+object+'">'+object+'</a>';
+                        objectHtml = '<a href="'+objectLink+'" title="'+object+'">'+object+'</a>';
                     } else {
-                        objectHtml = '<a href="'+object+'" title="'+object+'" style="color:#000000;text-decoration:none">'+objectPrefix+'<b>'+object+'</b></a>';
+                        objectHtml = '<a href="'+objectLink+'" title="'+object+'" style="color:#000000;text-decoration:none">'+objectPrefix+'<b>'+object+'</b></a>';
                     }
                 }
             } else {

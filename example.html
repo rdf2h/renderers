@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html class="render" resource="" context="http://zz2h.zazukoians.org/modes/FullPage">
+    <head>
+        <title>This will be replaced when the data is loaded</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="matchers" href="fallback-matchers.ttl" type="text/turtle" />
+        <script src="https://cdn.rawgit.com/rdf2h/rdf2h/v0.3.0/dist/rdf-ext.js"></script>
+        <script src="https://cdn.rawgit.com/rdf2h/rdf2h/v0.3.0/dist/rdf2h.js"></script>
+        <script src="https://cdn.rawgit.com/retog/rdf-parser-n3-browser/v0.3.0b/dist/n3-parser.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://cdn.rawgit.com/rdf2h/ld2h/v0.4.4/dist/ld2h.js"></script>
+        <script id="data" type="text/turtle">
+    @prefix s: <http://schema.org/> .        
+    
+    <>
+        a                               <http://schema.org/Person> ;
+        <http://schema.org/additionalName>
+                "Lee"^^<http://www.w3.org/2001/XMLSchema#string> ;
+        s:address [
+		s:addressCountry "US";
+		s:addressLocality "Pasadena";
+		s:addressRegion "CA";
+		s:postalCode "91104";
+		s:streetAddress "2311 North Los Robles Avenue, Aparment 4A"
+	];
+        <http://schema.org/familyName>  "Cooper"^^<http://www.w3.org/2001/XMLSchema#string> ;
+        <http://schema.org/givenName>   "Sheldon"^^<http://www.w3.org/2001/XMLSchema#string> ;
+        <http://schema.org/jobTitle>    "theoretical physicist"^^<http://www.w3.org/2001/XMLSchema#string> ;
+        <http://schema.org/knows>       <http://tbbt-ld.zazukoians.linked.guru/data/person/bernadette-rostenkowski> , <http://tbbt-ld.zazukoians.linked.guru/data/person/rajesh-koothrappali> , <http://tbbt-ld.zazukoians.linked.guru/data/person/leonard-hofstadter> , <http://tbbt-ld.zazukoians.linked.guru/data/person/amy-farrah-fowler> , <http://tbbt-ld.zazukoians.linked.guru/data/person/penny> , <http://tbbt-ld.zazukoians.linked.guru/data/person/stuart-bloom> , <http://tbbt-ld.zazukoians.linked.guru/data/person/howard-wolowitz> ;
+        <http://schema.org/parent>      <http://tbbt-ld.zazukoians.linked.guru/data/person/mary-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/mary-cooper>
+        <http://schema.org/children>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> ;
+        <http://schema.org/knows>     <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/bernadette-rostenkowski>
+        <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/howard-wolowitz>
+        <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/rajesh-koothrappali>
+        <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/penny>
+        <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/leonard-hofstadter>
+        <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/stuart-bloom>
+        <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/amy-farrah-fowler>
+        <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+</script>
+            
+        <script type="text/javascript">
+$(function () {
+        LD2h.expand().then(function() { 
+            console.log("finsihed expanding");
+        });
+});
+        </script>
+    </head>
+    <body>
+This will be replaced by rendered RDF.
+    </body>
+</html>
