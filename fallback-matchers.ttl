@@ -96,10 +96,7 @@ r2hp:fallback r2h:before <header> .
                         {url: "http://purl.org/dc/terms/", shortcut: "dct:"},
                         {url: "http://www.w3.org/2000/01/rdf-schema#", shortcut: "rdfs:"}];
         var result = "";
-        var first = 0;
-        var firstDash = -1;
         var predicatesArray = [];
-        var blankBack = [];
         var nodesToRender = [];
 		if (!n.rdf2h.renderedNodesToId)  {
 			n.rdf2h.renderedNodesToId = new Object();
@@ -108,19 +105,7 @@ r2hp:fallback r2h:before <header> .
         var s = n.graph.filter(function(t) {return t.subject.equals(node)}).toArray();
         if (s.length > 0) {
            n.rdf2h.renderedNodesToId[node.toString()] = true;
-           if (first > 0) {
-               result += '<hr class="baffone">';
-               if (blankBack[first-1] !== undefined) {
-                   result += '<div align="center">'+blankBack[first-1]+'</div>';
-               } else {
-                   var newSub = s[0].subject.nominalValue;
-                   result += '<div align="center"><a href="'+newSub+'">'+newSub+'</a></div>';
-               }
-               predicatesArray = [];
-               firstDash = -1;
-           }
            result += '<div class="container" id="'+node+'"><table id="tt" width="100%">';
-           first++;
            s.forEach(function(t) {
             var objectHtml;
             var prefix = "";
@@ -137,9 +122,7 @@ r2hp:fallback r2h:before <header> .
                 nodesToRender.push(t.object);
 				n.rdf2h.renderedNodesToId[t.object.toString()] = true;
                 if (t.object.interfaceName == "BlankNode") {
-                    objectHtml = '<div id="blank' + first + '" class="moving"></div><a onclick=\\'$("#'+t.object+'")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
-                    returnObjectLink = '<a onclick=\\'$("#blank' + first + '")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
-                    blankBack.push('<table width="30%"><tr><td>'+prefix+'<b>'+predicate+'</b></td><td>'+returnObjectLink+'</td></tr></table><br>');
+                    objectHtml = '<div class="moving"></div><a onclick=\\'$("#'+t.object+'")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
                 } else {
                     var objectPrefix = "";
                     var object = t.object.toString().replace(/&/g,"&amp;");
@@ -169,11 +152,7 @@ r2hp:fallback r2h:before <header> .
             }
             predicatesArray.push(predicate);
 
-                if (firstDash === 0) {
-                    result += '<hr /></td>'
-                }
-                result += '<tr><td width="35%" cellpadding=".1em" valign="top" id="sticky"><a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+objectHtml+'<hr /></td>';
-                firstDash = 1;
+            result += '<tr><td width="35%" cellpadding=".1em" valign="top" id="sticky"><a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+objectHtml+'<hr /></td>';
 
             });
            result += '</table></div>';
