@@ -116,9 +116,8 @@ r2hp:fallback r2h:before <header> .
                     predicate = predicateHtml[1];
                 }
             });
-            if ((t.object.interfaceName != "Literal") && (!n.rdf2h.renderedNodesToId[t.object.toString()])) {
+            if (t.object.interfaceName != "Literal") {
                 nodesToRender.push(t.object);
-				n.rdf2h.renderedNodesToId[t.object.toString()] = true;
                 if (t.object.interfaceName == "BlankNode") {
                     objectHtml = '<div class="moving"></div><a onclick=\\'$("#'+
                         t.object+'")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
@@ -162,11 +161,21 @@ r2hp:fallback r2h:before <header> .
            result += '</table></div>';
         };
         while (nodesToRender.length > 0) {
-            var node = nodesToRender.pop();
-            if (n.graph.filter(function(gt) {return gt.subject.equals(node)}).toArray().length > 0) {
-		result += n.rdf2h.render(n.graph, node, n.context);
+            var subNode = nodesToRender.pop();
+            if ((n.graph.filter(function(gt) {return gt.subject.equals(subNode)}).toArray().length > 0) && 
+                (!n.rdf2h.renderedNodesToId[subNode.toString()])) {
+		result += n.rdf2h.render(n.graph, subNode, n.context);
             }
 	}
+        console.log("getting subjects for"+node);
+        var backwardLinks = n.graph.filter(function(t) {return t.object.equals(node)}).toArray();
+        backwardLinks.forEach(function(t) {
+            var subjectNode = t.subject;
+            console.log(subjectNode);
+            if (!n.rdf2h.renderedNodesToId[subjectNode.toString()]) {
+                result += n.rdf2h.render(n.graph, subjectNode, n.context);
+            }
+        })
         return result;
     }'''
   ].

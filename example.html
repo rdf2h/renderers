@@ -14,7 +14,9 @@
         <script id="data" type="text/turtle">
     @prefix s: <http://schema.org/> .        
     
-    <>
+    <> s:mainContentOfPage <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper>.
+    
+    <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper>
         a                               <http://schema.org/Person> ;
         <http://schema.org/additionalName>
                 "Lee"^^<http://www.w3.org/2001/XMLSchema#string> ;
@@ -50,7 +52,8 @@
         <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
 
 <http://tbbt-ld.zazukoians.linked.guru/data/person/penny>
-        <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+        <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> ;
+        <http://schema.org/spouse>  <http://tbbt-ld.zazukoians.linked.guru/data/person/leonard-hofstadter>.
 
 <http://tbbt-ld.zazukoians.linked.guru/data/person/leonard-hofstadter>
         <http://schema.org/knows>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
