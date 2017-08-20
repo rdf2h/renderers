@@ -81,8 +81,6 @@ r2hp:fallback r2h:before <header> .
   r2h:template [
     r2h:context r2h:Default;
     r2h:javaScript '''function(n) {
-        //alert(n.graph);
-        //alert(n.node);
         var prefixes = [{url: "http://schema.org/", shortcut: "s:"},
                         {url: "http://www.w3.org/1999/02/22-rdf-syntax-ns#", shortcut: "rdf:"},
                         {url: "https://gont.ch/", shortcut: "gont:"},
@@ -122,7 +120,8 @@ r2hp:fallback r2h:before <header> .
                 nodesToRender.push(t.object);
 				n.rdf2h.renderedNodesToId[t.object.toString()] = true;
                 if (t.object.interfaceName == "BlankNode") {
-                    objectHtml = '<div class="moving"></div><a onclick=\\'$("#'+t.object+'")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
+                    objectHtml = '<div class="moving"></div><a onclick=\\'$("#'+
+                        t.object+'")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
                 } else {
                     var objectPrefix = "";
                     var object = t.object.toString().replace(/&/g,"&amp;");
@@ -137,7 +136,9 @@ r2hp:fallback r2h:before <header> .
                     if (objectPrefix === "") {
                         objectHtml = '<a href="'+objectLink+'" title="'+object+'">'+object+'</a>';
                     } else {
-                        objectHtml = '<a href="'+objectLink+'" title="'+object+'" style="color:#000000;text-decoration:none">'+objectPrefix+'<b>'+object+'</b></a>';
+                        objectHtml = '<a href="'+objectLink+'" title="'+object+
+                            '" style="color:#000000;text-decoration:none">'+
+                            objectPrefix+'<b>'+object+'</b></a>';
                     }
                 }
             } else {
@@ -152,7 +153,10 @@ r2hp:fallback r2h:before <header> .
             }
             predicatesArray.push(predicate);
 
-            result += '<tr><td width="35%" cellpadding=".1em" valign="top" id="sticky"><a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+objectHtml+'<hr /></td>';
+            result += '<tr><td width="35%" cellpadding=".1em" valign="top" id="sticky">'+
+                '<a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+
+                prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+
+                objectHtml+'<hr /></td>';
 
             });
            result += '</table></div>';
