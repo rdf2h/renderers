@@ -18,7 +18,7 @@ r2hp:fallback r2h:before <header> .
     r2h:mustache '''
       <div id="sticky-anchor"></div>
       <div id="sticky" class="list-group" style="width: 100%;">
-          <h4 class="list-group-item-heading">Resource: {{.}}</h4>
+          <h4 class="list-group-item-heading">Resource: <a href="{{.}}">{{.}}</a></h4>
       </div>
          {{{:continue}}}'''
   ];
