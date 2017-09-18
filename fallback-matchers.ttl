@@ -59,7 +59,7 @@ r2hp:fallback r2h:before <header> .
   ];
   r2h:template [
     r2h:context zzm:HtmlBody;
-    r2h:mustache '''<div id="header">trifid-ld</div>
+    r2h:mustache '''<div id="header"></div>
         {{{:render . r2h:Default}}}<div id="footer">
 
         </div>'''
