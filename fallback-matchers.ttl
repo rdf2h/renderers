@@ -1,86 +1,69 @@
-@base <http://zazukoians.org/2016/generic-rdf2h-matchers/> .
+@base <http://rdf2h.github.io/generic-rdf2h-Renderers/> .
+@prefix gt: <http://rdf2h.github.io/2016/generic-rdf2h-Renderers/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix r2h: <http://rdf2h.github.io/2015/rdf2h#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/>.
 @prefix s: <http://schema.org/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix zzm: <http://zz2h.zazukoians.org/modes/> .
-@prefix zz2h: <http://zz2h.zazukoians.org/ontology/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix r2hp: <http://rdf2h.github.io/2015/rdf2h-points/> .
 
-r2hp:fallback r2h:before <header> .
-
-<header> a r2h:Matcher ;
-  r2h:template [
+<header> a r2h:Renderer;
+    r2h:type rdfs:Resource;
     r2h:context r2h:Default;
-    r2h:mustache '''
-      <div id="sticky-anchor"></div>
-      <div id="sticky" class="list-group" style="width: 100%;">
+    r2h:mustache """
+      <div class="sticky list-group" style="width: 100%;">
           <h4 class="list-group-item-heading">Resource: <a href="{{.}}">{{.}}</a></h4>
       </div>
-         {{{:continue}}}'''
-  ];
-  r2h:before <rdfTypes>.
-  
-<rdfTypes> a r2h:Matcher ;
-  r2h:triplePattern [
-    r2h:subject r2h:this;
-    r2h:predicate rdf:type;
-  ];
-  r2h:template [
-    r2h:context r2h:Default;
-    r2h:mustache '''
-      <div id="sticky-anchor"></div>
-      <div id="sticky" class="list-group" style="width: 100%;">
+      <div class="sticky list-group" style="width: 100%;">
           <p class="list-group-item-text">is a {{#rdf:type}}<a href="{{.}}">{{.}}</a> {{/rdf:type}}</p>
 		  <hr>
       </div>
-         {{{:continue}}}'''
-  ];
-  r2h:before <catchall>.
+      {{{:render . r2h:Default-Naked}}}""".
 
-<catchall> a r2h:Matcher ;
-  r2h:template [
-    rdfs:comment '''Renders a full page, delegating to matchers in the default 
-    context for the body, and to zzm:HtmlHead for things like the html title''';
-    r2h:context zzm:FullPage;
-    r2h:mustache '''
+<genericFullPage> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    rdfs:comment """Renders a full page, delegating to matchers in the default 
+    context for the body, and to gt:HtmlHead for things like the html title""";
+    r2h:context gt:FullPage;
+    r2h:mustache """
     {{{@prefix r2h: <http://rdf2h.github.io/2015/rdf2h#>}}}
-    {{{@prefix zzm: <http://zz2h.zazukoians.org/modes/>}}}
+    {{{@prefix gt: <http://rdf2h.github.io/2016/generic-rdf2h-Renderers/>}}}
     <head>
-      {{{:render . zzm:HtmlHead}}}
+      {{{:render . gt:HtmlHead}}}
     </head>
     <body>
-        {{{:render . zzm:HtmlBody}}}
+      {{{:render . gt:HtmlBody}}}
     </body>
-    '''
-  ];
-  r2h:template [
-    r2h:context zzm:HtmlBody;
-    r2h:mustache '''<div id="header"></div>
+    """.
+<genericBody> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context gt:HtmlBody;
+    r2h:mustache """<div id="header"></div>
         {{{:render . r2h:Default}}}<div id="footer">
 
-        </div>'''
-  ];
-    r2h:template [
-        r2h:context zzm:HtmlHead;
-        r2h:mustache '''
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            {{{:render . zzm:HtmlTitle}}}
-        '''
-   ];
-    r2h:template [
-        r2h:context zzm:HtmlTitle;
-        r2h:mustache '''
-          <title>Resource {{.}}</title>
-    '''
-  ];
-  r2h:template [
-    r2h:context r2h:Default;
-    r2h:javaScript '''function(n) {
+        </div>""".
+
+<genericHead> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context gt:HtmlHead;
+    r2h:mustache """
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        {{{:render . gt:HtmlTitle}}}
+    """.
+
+<genericHtmlTitle> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context gt:HtmlTitle;
+    r2h:mustache """
+        <title>Resource {{.}}</title>
+    """.
+
+<genericResource> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context r2h:Default-Naked;
+    r2h:javaScript """
         var prefixes = [{url: "http://schema.org/", shortcut: "s:"},
                         {url: "http://www.w3.org/1999/02/22-rdf-syntax-ns#", shortcut: "rdf:"},
                         {url: "https://gont.ch/", shortcut: "gont:"},
@@ -96,13 +79,14 @@ r2hp:fallback r2h:before <header> .
         var result = "";
         var predicatesArray = [];
         var nodesToRender = [];
-		if (!n.rdf2h.renderedNodesToId)  {
-			n.rdf2h.renderedNodesToId = new Object();
+        //should rather attach this to something specific to this RDF2h invocation
+		if (!window.renderedNodesToId)  {
+			window.renderedNodesToId = new Object();
 		}
         var node = n.node;
-        var s = n.graph.filter(function(t) {return t.subject.equals(node)}).toArray();
+        var s = n.graph.match(node, undefined, undefined); //filter(function(t) {return t.subject.equals(node)}).toArray();
         if (s.length > 0) {
-           n.rdf2h.renderedNodesToId[node.toString()] = true;
+           window.renderedNodesToId[node.toString()] = true;
            result += '<div class="container" id="'+node+'"><table id="tt" width="100%">';
            s.forEach(function(t) {
             var objectHtml;
@@ -162,20 +146,19 @@ r2hp:fallback r2h:before <header> .
         };
         while (nodesToRender.length > 0) {
             var subNode = nodesToRender.pop();
-            if ((n.graph.filter(function(gt) {return gt.subject.equals(subNode)}).toArray().length > 0) && 
-                (!n.rdf2h.renderedNodesToId[subNode.toString()])) {
-		result += n.rdf2h.render(n.graph, subNode, n.context);
+            if ((n.graph.match(subNode, undefined, undefined).length > 0) && 
+                (!window.renderedNodesToId[subNode.toString()])) {
+		result += render(GraphNode(subNode, n.graph), context);
             }
 	}
         console.log("getting subjects for"+node);
-        var backwardLinks = n.graph.filter(function(t) {return t.object.equals(node)}).toArray();
+        var backwardLinks = n.graph.match(undefined, undefined, node);
         backwardLinks.forEach(function(t) {
             var subjectNode = t.subject;
             console.log(subjectNode);
-            if (!n.rdf2h.renderedNodesToId[subjectNode.toString()]) {
-                result += n.rdf2h.render(n.graph, subjectNode, n.context);
+            if (!window.renderedNodesToId[subjectNode.toString()]) {
+                result += render(GraphNode(subjectNode, n.graph), context);
             }
         })
         return result;
-    }'''
-  ].
+    """.
