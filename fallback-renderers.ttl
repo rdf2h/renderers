@@ -23,7 +23,7 @@
 
 <genericFullPage> a r2h:Renderer;
     r2h:type rdfs:Resource;
-    rdfs:comment """Renders a full page, delegating to matchers in the default 
+    rdfs:comment """Renders a full page, delegating to renderers in the default 
     context for the body, and to gt:HtmlHead for things like the html title""";
     r2h:context gt:FullPage;
     r2h:mustache """
