@@ -105,8 +105,8 @@
             if (t.object.termType !== "Literal") {
                 nodesToRender.push(t.object);
                 if (t.object.termType == "BlankNode") {
-                    objectHtml = '<div class="moving"></div><a onclick=\\'$("#'+
-                        t.object+'")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
+                    objectHtml = '<div class="moving"></div><a onclick=\\'document.getElementById('+
+                        t.object+'").scrollIntoView( true );\\'>'+t.object+'</a>';
                 } else {
                     var objectPrefix = "";
                     var object = t.object.value.replace(/&/g,"&amp;");
