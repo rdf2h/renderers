@@ -15,10 +15,12 @@
       <div class="sticky list-group" style="width: 100%;">
           <h4 class="list-group-item-heading">Resource: <a href="{{.}}">{{.}}</a></h4>
       </div>
+      {{#+rdf:type}}
       <div class="sticky list-group" style="width: 100%;">
           <p class="list-group-item-text">is a {{#rdf:type}}<a href="{{.}}">{{.}}</a> {{/rdf:type}}</p>
 		  <hr>
       </div>
+      {{/+rdf:type}}
       {{{:render . r2h:Default-Naked}}}""".
 
 <genericFullPage> a r2h:Renderer;
@@ -84,14 +86,14 @@
 			window.renderedNodesToId = new Object();
 		}
         var node = n.node;
-        var s = n.graph.match(node, undefined, undefined); //filter(function(t) {return t.subject.equals(node)}).toArray();
+        var s = n.graph.match(node, undefined, undefined);
         if (s.length > 0) {
            window.renderedNodesToId[node.toString()] = true;
-           result += '<div class="container" id="'+node+'"><table id="tt" width="100%">';
+           result += '<div class="container" id="'+node+'"><table width="100%">';
            s.forEach(function(t) {
             var objectHtml;
             var prefix = "";
-            var predicate = t.predicate.toString();
+            var predicate = t.predicate.value;
             var link = predicate;
             prefixes.forEach(function(p) {
                 var predicateHtml = predicate.split(p.url);
@@ -100,14 +102,14 @@
                     predicate = predicateHtml[1];
                 }
             });
-            if (t.object.interfaceName != "Literal") {
+            if (t.object.termType !== "Literal") {
                 nodesToRender.push(t.object);
-                if (t.object.interfaceName == "BlankNode") {
+                if (t.object.termType == "BlankNode") {
                     objectHtml = '<div class="moving"></div><a onclick=\\'$("#'+
                         t.object+'")[0].scrollIntoView( true );\\'>'+t.object+'</a>';
                 } else {
                     var objectPrefix = "";
-                    var object = t.object.toString().replace(/&/g,"&amp;");
+                    var object = t.object.value.replace(/&/g,"&amp;");
                     var objectLink = object;
                     prefixes.forEach(function(p) {
                         var objectSplit = object.split(p.url);
@@ -136,9 +138,9 @@
             }
             predicatesArray.push(predicate);
 
-            result += '<tr><td width="35%" cellpadding=".1em" valign="top" id="sticky">'+
+            result += '<tr><td width="35%" cellpadding=".1em" valign="top">'+
                 '<a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+
-                prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+
+                prefix+'<b>!'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+
                 objectHtml+'<hr /></td>';
 
             });
@@ -148,7 +150,7 @@
             var subNode = nodesToRender.pop();
             if ((n.graph.match(subNode, undefined, undefined).length > 0) && 
                 (!window.renderedNodesToId[subNode.toString()])) {
-		result += render(GraphNode(subNode, n.graph), context);
+		result += render(GraphNode(subNode, n.graph), $rdf.sym("http://rdf2h.github.io/2015/rdf2h#Default"));
             }
 	}
         console.log("getting subjects for"+node);
@@ -157,7 +159,7 @@
             var subjectNode = t.subject;
             console.log(subjectNode);
             if (!window.renderedNodesToId[subjectNode.toString()]) {
-                result += render(GraphNode(subjectNode, n.graph), context);
+                result += render(GraphNode(subjectNode, n.graph), $rdf.sym("http://rdf2h.github.io/2015/rdf2h#Default"));
             }
         })
         return result;
