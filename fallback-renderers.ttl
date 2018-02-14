@@ -140,7 +140,7 @@
 
             result += '<tr><td width="35%" cellpadding=".1em" valign="top">'+
                 '<a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+
-                prefix+'<b>!'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+
+                prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+
                 objectHtml+'<hr /></td>';
 
             });
