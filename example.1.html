@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html class="render" resource="http://dbpedia.org/ontology/Settlement" context="http://rdf2h.github.io/2016/generic-rdf2h-Renderers/FullPage">
+    <head>
+        <title>This will be replaced when the data is loaded</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="renderers" href="fallback-renderers.ttl" type="text/turtle" />
+        <!-- <script src="https://rawgit.com/rdf2h/rdf2h/v2.0/output/js/rdf2h.js"></script> -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://rawgit.com/rdf2h/ld2h/v2.0/dist/ld2h.js"></script>
+        <script id="data" type="text/turtle">
+                @prefix ns0:	<http://open.vocab.org/terms/> .
+                @prefix dbo:	<http://dbpedia.org/ontology/> .
+                <http://dbpedia.org/ontology/>	ns0:defines	dbo:Settlement .
+                @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
+                dbo:City	rdfs:subClassOf	dbo:Settlement .
+                dbo:CityDistrict	rdfs:subClassOf	dbo:Settlement .
+                dbo:HistoricalSettlement	rdfs:subClassOf	dbo:Settlement .
+                @prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+                @prefix owl:	<http://www.w3.org/2002/07/owl#> .
+                dbo:Settlement	rdf:type	owl:Class .
+                @prefix wikidata:	<http://www.wikidata.org/entity/> .
+                dbo:Settlement	owl:equivalentClass	wikidata:Q486972 ;
+                        rdfs:label	"\u5C45\u4F4F\u5730"@ja ,
+                                "nederzetting"@nl ,
+                                "settlement"@en ,
+                                "\u03BF\u03B9\u03BA\u03B9\u03C3\u03BC\u03CC\u03C2"@el ,
+                                "Siedlung"@de ,
+                                "bardas"@ga ,
+                                "zone peupl\u00E9e"@fr ;
+                        rdfs:isDefinedBy	dbo: ;
+                        rdfs:subClassOf	dbo:PopulatedPlace .
+                @prefix wdrs:	<http://www.w3.org/2007/05/powder-s#> .
+                dbo:Settlement	wdrs:describedby	<http://dbpedia.org/ontology/data/definitions.ttl> .
+                @prefix prov:	<http://www.w3.org/ns/prov#> .
+                @prefix ns8:	<http://mappings.dbpedia.org/index.php/OntologyClass:> .
+                dbo:Settlement	prov:wasDerivedFrom	ns8:Settlement .
+                dbo:Town	rdfs:subClassOf	dbo:Settlement .
+                dbo:Village	rdfs:subClassOf	dbo:Settlement .
+                dbo:adjacentSettlement	rdfs:domain	dbo:Settlement ;
+                        rdfs:range	dbo:Settlement .
+                dbo:administrativeCollectivity	rdfs:domain	dbo:Settlement .
+                dbo:administrativeDistrict	rdfs:domain	dbo:Settlement .
+                dbo:agglomerationPopulation	rdfs:domain	dbo:Settlement .
+                dbo:agglomerationPopulationYear	rdfs:domain	dbo:Settlement .
+                dbo:associationOfLocalGovernment	rdfs:domain	dbo:Settlement .
+                dbo:bourgmestre	rdfs:domain	dbo:Settlement .
+                dbo:canton	rdfs:domain	dbo:Settlement ;
+                        rdfs:range	dbo:Settlement .
+                dbo:coastLine	rdfs:domain	dbo:Settlement .
+                dbo:codeSettlement	rdfs:domain	dbo:Settlement .
+                dbo:collectivityMinority	rdfs:domain	dbo:Settlement .
+                dbo:commune	rdfs:domain	dbo:Settlement ;
+                        rdfs:range	dbo:Settlement .
+                dbo:daira	rdfs:domain	dbo:Settlement .
+                dbo:day	rdfs:domain	dbo:Settlement .
+                dbo:distanceToBelfast	rdfs:domain	dbo:Settlement .
+                dbo:distanceToCapital	rdfs:domain	dbo:Settlement .
+                dbo:distanceToCardiff	rdfs:domain	dbo:Settlement .
+                dbo:distanceToCharingCross	rdfs:domain	dbo:Settlement .
+                dbo:distanceToDouglas	rdfs:domain	dbo:Settlement .
+                dbo:distanceToDublin	rdfs:domain	dbo:Settlement .
+                dbo:distanceToEdinburgh	rdfs:domain	dbo:Settlement .
+                dbo:distanceToLondon	rdfs:domain	dbo:Settlement .
+                dbo:distanceToNearestCity	rdfs:domain	dbo:Settlement .
+                dbo:employersCelebration	rdfs:domain	dbo:Settlement .
+                dbo:federalState	rdfs:domain	dbo:Settlement .
+                dbo:frazioni	rdfs:domain	dbo:Settlement .
+                dbo:geolocDepartment	rdfs:domain	dbo:Settlement .
+                dbo:highestPoint	rdfs:domain	dbo:Settlement .
+                dbo:hometown	rdfs:range	dbo:Settlement .
+                dbo:inseeCode	rdfs:domain	dbo:Settlement .
+                dbo:isCityState	rdfs:domain	dbo:Settlement .
+                dbo:isoCodeRegion	rdfs:domain	dbo:Settlement .
+                dbo:jointCommunity	rdfs:domain	dbo:Settlement .
+                dbo:landRegistryCode	rdfs:domain	dbo:Settlement .
+                dbo:largestMetro	rdfs:domain	dbo:Settlement .
+                dbo:locality	rdfs:domain	dbo:Settlement .
+                dbo:lowestPoint	rdfs:domain	dbo:Settlement .
+                dbo:meetingCity	rdfs:range	dbo:Settlement .
+                dbo:mergedSettlement	rdfs:domain	dbo:Settlement ;
+                        rdfs:range	dbo:Settlement .
+                dbo:minority	rdfs:domain	dbo:Settlement .
+                dbo:officialName	rdfs:domain	dbo:Settlement .
+                dbo:ofsCode	rdfs:domain	dbo:Settlement .
+                dbo:ons	rdfs:domain	dbo:Settlement .
+                dbo:otherInformation	rdfs:domain	dbo:Settlement .
+                dbo:otherLanguage	rdfs:domain	dbo:Settlement .
+                dbo:patronSaint	rdfs:domain	dbo:Settlement .
+                dbo:phonePrefixLabel	rdfs:domain	dbo:Settlement .
+                dbo:politicalMajority	rdfs:domain	dbo:Settlement .
+                dbo:politicalSeats	rdfs:domain	dbo:Settlement .
+                dbo:populationTotalReference	rdfs:domain	dbo:Settlement .
+                dbo:provCode	rdfs:domain	dbo:Settlement .
+                dbo:reffBourgmestre	rdfs:domain	dbo:Settlement .
+                dbo:sameName	rdfs:domain	dbo:Settlement .
+                dbo:settlementAttached	rdfs:domain	dbo:Settlement .
+                dbo:summerTemperature	rdfs:domain	dbo:Settlement .
+                dbo:twinTown	rdfs:domain	dbo:Settlement ;
+                        rdfs:range	dbo:Settlement .
+                dbo:urbanArea	rdfs:domain	dbo:Settlement .
+                dbo:wilaya	rdfs:domain	dbo:Settlement .
+                dbo:winterTemperature	rdfs:domain	dbo:Settlement .
+                wikidata:Q486972S95E17F07-280C-45BF-9544-256639ECA993	wikidata:P1709v	dbo:Settlement .
+                <http://dbpedia.org/ontology/data/definitions.ttl>	ns0:describes	dbo:Settlement .
+        </script>
+            
+        <script type="text/javascript">
+$(function () {
+        LD2h.expand().then(function() { 
+            console.log("finsihed expanding");
+        });
+});
+        </script>
+    </head>
+    <body>
+This will be replaced by rendered RDF.
+    </body>
+</html>

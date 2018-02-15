@@ -3,7 +3,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix r2h: <http://rdf2h.github.io/2015/rdf2h#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/>.
+@prefix dc: <http://pns.org/dc/elements/1.1/>.
 @prefix s: <http://schema.org/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -66,18 +66,28 @@
     r2h:type rdfs:Resource;
     r2h:context r2h:Default-Naked;
     r2h:javaScript """
-        var prefixes = [{url: "http://schema.org/", shortcut: "s:"},
-                        {url: "http://www.w3.org/1999/02/22-rdf-syntax-ns#", shortcut: "rdf:"},
-                        {url: "https://gont.ch/", shortcut: "gont:"},
-                        {url: "http://www.w3.org/2004/02/skos/core#", shortcut: "skos:"},
-                        {url: "http://www.w3.org/2002/07/owl#", shortcut: "owl:"},
-                        {url: "http://dbpedia.org/resource/", shortcut: "dbr:"},
-                        {url: "http://dbpedia.org/class/yago/", shortcut: "yago:"},
-                        {url: "http://xmlns.com/foaf/0.1/", shortcut: "foaf:"},
-                        {url: "http://www.wikidata.org/entity/", shortcut: "wikidata:"},
-                        {url: "http://dbpedia.org/ontology/", shortcut: "dbo:"},
-                        {url: "http://purl.org/dc/terms/", shortcut: "dct:"},
-                        {url: "http://www.w3.org/2000/01/rdf-schema#", shortcut: "rdfs:"}];
+        var prefixMappings = [{ns: "http://schema.org/", prefix: "s:"},
+                        {ns: "http://www.w3.org/1999/02/22-rdf-syntax-ns#", prefix: "rdf:"},
+                        {ns: "https://gont.ch/", prefix: "gont:"},
+                        {ns: "http://www.w3.org/2004/02/skos/core#", prefix: "skos:"},
+                        {ns: "http://www.w3.org/2002/07/owl#", prefix: "owl:"},
+                        {ns: "http://dbpedia.org/resource/", prefix: "dbr:"},
+                        {ns: "http://dbpedia.org/class/yago/", prefix: "yago:"},
+                        {ns: "http://xmlns.com/foaf/0.1/", prefix: "foaf:"},
+                        {ns: "http://www.wikidata.org/entity/", prefix: "wikidata:"},
+                        {ns: "http://dbpedia.org/ontology/", prefix: "dbo:"},
+                        {ns: "http://pns.org/dc/terms/", prefix: "dct:"},
+                        {ns: "http://www.w3.org/2000/01/rdf-schema#", prefix: "rdfs:"}];
+        function styleUri(uri) {
+            var mapping = prefixMappings.find(function(mappping) {
+                return uri.startsWith(mappping.ns);
+            });
+            if (mapping) {
+                return mapping.prefix+"<b>"+uri.substring(mapping.ns.length)+"</b>";
+            } else {
+                return uri;
+            }
+        }
         var result = "";
         var predicatesArray = [];
         var nodesToRender = [];
@@ -94,14 +104,6 @@
             var objectHtml;
             var prefix = "";
             var predicate = t.predicate.value;
-            var link = predicate;
-            prefixes.forEach(function(p) {
-                var predicateHtml = predicate.split(p.url);
-                if (predicateHtml[0] === "") {
-                    prefix = p.shortcut;
-                    predicate = predicateHtml[1];
-                }
-            });
             if (t.object.termType !== "Literal") {
                 nodesToRender.push(t.object);
                 if (t.object.termType == "BlankNode") {
@@ -110,21 +112,7 @@
                 } else {
                     var objectPrefix = "";
                     var object = t.object.value.replace(/&/g,"&amp;");
-                    var objectLink = object;
-                    prefixes.forEach(function(p) {
-                        var objectSplit = object.split(p.url);
-                        if (objectSplit[0] === "") {
-                            objectPrefix = p.shortcut;
-                            object = objectSplit[1];
-                        }
-                    });
-                    if (objectPrefix === "") {
-                        objectHtml = '<a href="'+objectLink+'" title="'+object+'">'+object+'</a>';
-                    } else {
-                        objectHtml = '<a href="'+objectLink+'" title="'+object+
-                            '" style="color:#000000;text-decoration:none">'+
-                            objectPrefix+'<b>'+object+'</b></a>';
-                    }
+                    objectHtml = '<a href="'+object+'" title="'+object+'">'+styleUri(object)+'</a>';
                 }
             } else {
                 objectHtml = t.object;
@@ -139,8 +127,8 @@
             predicatesArray.push(predicate);
 
             result += '<tr><td width="35%" cellpadding=".1em" valign="top">'+
-                '<a href="'+link+'" title="'+link+'" style="color:#000000;text-decoration:none">'+
-                prefix+'<b>'+predicate+'</b></a></td><td width="65%" cellpadding=".1em">'+
+                '<a href="'+predicate+'" title="'+predicate+'" style="color:#000000;text-decoration:none">'+
+                styleUri(predicate)+'</a></td><td width="65%" cellpadding=".1em">'+
                 objectHtml+'<hr /></td>';
 
             });
