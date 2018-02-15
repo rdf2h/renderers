@@ -92,13 +92,13 @@
         var predicatesArray = [];
         var nodesToRender = [];
         //should rather attach this to something specific to this RDF2h invocation
-		if (!window.renderedNodesToId)  {
-			window.renderedNodesToId = new Object();
+		if (!env.renderedNodesToId)  {
+			env.renderedNodesToId = new Object();
 		}
         var node = n.node;
         var s = n.graph.match(node, undefined, undefined);
         if (s.length > 0) {
-           window.renderedNodesToId[node.toString()] = true;
+           env.renderedNodesToId[node.toString()] = true;
            result += '<div class="container" id="'+node+'"><table width="100%">';
            s.forEach(function(t) {
             var objectHtml;
@@ -137,7 +137,7 @@
         while (nodesToRender.length > 0) {
             var subNode = nodesToRender.pop();
             if ((n.graph.match(subNode, undefined, undefined).length > 0) && 
-                (!window.renderedNodesToId[subNode.toString()])) {
+                (!env.renderedNodesToId[subNode.toString()])) {
 		result += render(GraphNode(subNode, n.graph), $rdf.sym("http://rdf2h.github.io/2015/rdf2h#Default"));
             }
 	}
@@ -146,7 +146,7 @@
         backwardLinks.forEach(function(t) {
             var subjectNode = t.subject;
             console.log(subjectNode);
-            if (!window.renderedNodesToId[subjectNode.toString()]) {
+            if (!env.renderedNodesToId[subjectNode.toString()]) {
                 result += render(GraphNode(subjectNode, n.graph), $rdf.sym("http://rdf2h.github.io/2015/rdf2h#Default"));
             }
         })
