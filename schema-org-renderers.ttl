@@ -1,0 +1,175 @@
+@base <http://rdf2h.github.io/generic-rdf2h-Renderers/> .
+@prefix gt: <http://rdf2h.github.io/2016/generic-rdf2h-Renderers/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix r2h: <http://rdf2h.github.io/2015/rdf2h#> .
+@prefix dc: <http://pns.org/dc/elements/1.1/>.
+@prefix s: <http://schema.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<Person> a r2h:Renderer;
+    r2h:type s:Person;
+    r2h:context r2h:Default;
+    r2h:mustache """
+      {{#+s:name}}
+        <h1>
+          Person:
+          <a href='{{.}}'>{{s:name}}</a>
+        </h1>
+      {{/+s:name}}
+      {{^+s:name}}
+        <h1>
+          Person:
+          <a href='{{.}}'>{{s:givenName}} {{s:additionalName}} {{s:familyName}}</a>
+        </h1>
+      {{/+s:name}}
+
+      *
+      {{s:birthDate}}
+      {{^+s:birthDate}}
+      ?
+      {{/+s:birthDate}}
+      &#x271D
+      {{s:deathDate}}
+      {{^+s:deathDate}}
+      ? (may still be alive)
+      {{/+s:deathDate}}
+      
+      {{#s:gender}}
+        <br>{{.}}
+      {{/s:gender}}
+
+      {{#+s:parent}}
+        <h3>Parents:</h3>
+        {{#s:parent}}
+          <a href='{{.}}'>{{.}}</a><br>
+        {{/s:parent}}
+      {{/+s:parent}}
+      
+      {{#+s:children}}
+        <h3>Children:</h3>
+        {{s:children}}
+      {{/+s:children}}
+
+      {{#+s:sibling}}
+        <h3>Siblings:</h3>
+        {{s:sibling}}
+      {{/+s:sibling}}
+
+      {{#+s:relatedTo}}
+        <h3>Related to:</h3>
+        {{s:relatedTo}}
+      {{/+s:relatedTo}}
+
+      {{#+s:address}}
+        <h3>Address:</h3>
+        {{#s:address}}
+          {{#+s:streetAddress}}
+            {{s:streetAddress}} <br>
+          {{/+s:streetAddress}}
+          {{s:postalCode}}
+          {{s:addressLocality}}
+          <br>
+          {{#+s:addressRegion}}
+            in {{s:addressRegion}}
+          {{/+s:addressRegion}}
+          {{#+s:addressCountry}}
+            ({{s:addressCountry}}) <br>
+          {{/+s:addressCountry}}
+          {{s:address}}
+        {{/s:address}}
+      {{/+s:address}}
+
+      {{#+s:telephone}}
+        <h3>Telephone:</h3>
+        {{s:telephone}}
+      {{/+s:telephone}}
+
+      {{#+s:jobTitle}}
+        <h3>Job title:</h3>
+        {{s:jobTitle}}
+      {{/+s:jobTitle}}
+
+      {{#+s:knows}}
+        <h3>Knows:</h3>
+        {{#s:knows}}
+        <a href='{{.}}'>{{.}}</a> <br>
+        {{/s:knows}}
+      {{/+s:knows}}
+
+      {{#+s:knows<-/.}}
+        <h3>Known by:</h3>
+        {{#s:knows<-/.}}
+        <a href='{{.}}'>{{.}}</a> <br>
+        {{/s:knows<-/.}}
+      {{/+s:knows<-/.}}
+
+      {{{:render . s:Thing}}}
+      """.
+
+<Thing>  a r2h:Renderer;
+    r2h:type s:Thing;
+    r2h:context r2h:Default;
+    r2h:mustache """
+    {{#+s:name}}
+        <h1>
+          Resource:
+          <a href='{{.}}'>{{s:name}}</a>
+        </h1>
+      {{/+s:name}}
+      {{^+s:name}}
+        <h1>
+          Resource:
+          <a href='{{.}}'>{{.}}</a>
+        </h1>
+      {{/+s:name}}
+    {{{:render . s:Thing}}}
+    """.
+
+<thing>  a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context s:Thing;
+    r2h:mustache """
+      {{#+s:alternateName}}
+        <h3>Also known as:</h3>
+        {{#s:alternateName}}
+        <a href='{{.}}'>{{.}}</a> <br>
+        {{/s:alternateName}}        
+      {{/+s:alternateName}}
+
+      {{#+s:description}}
+        <h3>Description:</h3>
+        {{s:description}}       
+      {{/+s:description}}
+    """.
+
+<gFullPage> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    rdfs:comment """Renders a full page, delegating to renderers in the default 
+    context for the body, and to gt:HtmlHead for things like the html title""";
+    r2h:context gt:FullPage;
+    r2h:mustache """
+    {{{@prefix r2h: <http://rdf2h.github.io/2015/rdf2h#>}}}
+    {{{@prefix gt: <http://rdf2h.github.io/2016/generic-rdf2h-Renderers/>}}}
+    {{{@prefix s: <http://schema.org/>}}}
+    <head>
+      {{{:render . gt:HtmlHead}}}
+    </head>
+    <body>
+      {{{:render . r2h:Default}}}
+    </body>
+    """.
+
+<gHead> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context gt:HtmlHead;
+    r2h:mustache """
+    {{{:render . gt:HtmlTitle}}}
+    <style> a { color:inherit; } </style>
+    """.
+
+<gHtmlTitle> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context gt:HtmlTitle;
+    r2h:mustache "<title>{{.}}</title>".
