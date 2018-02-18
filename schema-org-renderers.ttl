@@ -116,7 +116,7 @@
       {{/+s:manufacturer}}
 
       {{#+s:category}}
-        <h3>In the following categories:</h3>
+        <h3>Listed in the following categories:</h3>
         {{#s:category}}
           <a href='{{.}}'>
             {{{:render . s:name}}}
