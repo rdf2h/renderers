@@ -107,7 +107,7 @@
             if (t.object.termType !== "Literal") {
                 nodesToRender.push(t.object);
                 if (t.object.termType == "BlankNode") {
-                    objectHtml = '<div class="moving"></div><a onclick=\\'document.getElementById('+
+                    objectHtml = '<div class="moving"></div><a onclick=\\'document.getElementById(\"'+
                         t.object+'").scrollIntoView( true );\\'>'+t.object+'</a>';
                 } else {
                     var objectPrefix = "";
