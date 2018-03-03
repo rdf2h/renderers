@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="render" resource="abb" context="http://rdf2h.github.io/2016/generic-rdf2h-Renderers/FullPage">
+<head>
+<title>This will be replaced when the data is loaded</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="renderers" href="schema-org-renderers.ttl" type="text/turtle" />
+<link rel="renderers" href="fallback-renderers.ttl" type="text/turtle" />
+<!-- <script src="https://rawgit.com/rdf2h/rdf2h/v2.0/output/js/rdf2h.js"></script> -->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://rawgit.com/rdf2h/ld2h/v2.0/dist/ld2h.js"></script>
+<script id="data" type="text/turtle">
+@prefix s: <http://schema.org/> .
+
+<abb> a s:Organization;
+  s:name "ABB";
+  s:legalName "ABB Ltd";
+.
+
+<giruno> a s:Product;
+  s:brand "Giruno";
+  s:category <train>;
+  s:manufacturer <stadler>;
+.
+
+<kiss160> a s:ProductModel;
+  s:brand "KISS-Doppelstockzüge";
+  s:name "Stadler KISS160";
+  s:category <train>;
+  s:manufacturer <stadler>;
+  s:isVariantOf <kiss>;
+  s:image <https://wwwstadlerrailcom-live-01e96f7.s3-eu-central-1.amazonaws.com/filer_public_thumbnails/filer_public/95/76/9576dd73-62cd-4dbe-88a9-5e5b622422a5/09_kiss160_cam1_gery_1530px_srgb_2.jpg__1020x680_q90_crop_subsampling-2_upscale.jpg>;
+  s:description "Der KISS160 ist ein doppelstöckiger Regionalzug. Beim KISS ist der Name Programm: Komfortabler Innovativer Spurtstarker S-Bahn-Zug. Als Regionalzug mit einer hohen Fahrgastkapazität ist der KISS seit 2010 von Westeuropa bis zum Ural erfolgreich unterwegs – und bald auch in den USA. Der KISS160 ist ein Doppelstockzug mit einer hohen, skalierbaren Fahrgastkapazität. Mit seinen stabilen, verwindungssteifen Aluminium-Wagenkasten ist der KISS leicht und energieeffizient. In der  Ausführung als Regionalzug mit doppelflügeligen Türen für schnellen Personenfluss kann er auf eine maximale Geschwindigkeit von 160 km/h ausgelegt werden. Es sind zwei- bis achtteilige Zugskompositionen in Normal- und Breitspur realisierbar, die je nach Innenraumdesign bis zu 1000 Fahrgästen Sitzplätze bieten. Im Innenbereich lässt sich der KISS sehr flexibel auf die individuellen Kundenbedürfnisse ausgestalten. Den ersten Auftrag für KISS-Doppelstockzüge hat Stadler im Jahr 2008 von den SBB erhalten.";
+.
+
+<kiss> a s:Product;
+s:brand "KISS-Doppelstockzüge";
+s:manufacturer <stadler>;
+.
+
+<locomotive> a s:Thing;
+  s:name "Locomotive";
+.
+
+<mutz> a s:ProductModel;
+  s:brand "Mutz";
+  s:name "Stadler MUTZ";
+  s:category <train>;
+  s:category <locomotive>;
+  s:manufacturer <stadler>;
+  s:isVariantOf <kiss160>;
+  s:image <https://www.bls.ch/-/media/bls/bilder/fahren/unterwegs/bahn/flotte/mutz-4fach-traktion-winter.jpg>;
+  s:description "Der MUTZ (Moderner, Universeller TriebZug), bietet mit seinen je 335 Sitzplätzen und bequemen Stehplatzzonen mehr Platz und Komfort. Klimatisierung, Boden- und Seitenwandheizung, moderne optische und akustische Fahrgastinformation, Videoüberwachung, 2 Toiletten (eine davon rollstuhlgängig) sowie Rollstuhlplätze in beiden Wagenklassen zeichnen die Fahrzeuge aus. Und Geschwindigkeiten von bis zu 160 km/h garantieren attraktive Fahrzeiten. Es können bis zu 4 Triebzüge aneinandergekoppelt werden (maximal 1340 Sitzplätze).";
+.
+
+<train> a s:Thing;
+s:name "Train";
+.
+
+<re_460> a s:ProductModel;
+  s:name "Re 460";
+  s:brand "Lok 2000";
+  s:category <locomotive>;
+  s:manufacturer <abb>;
+.
+
+
+<stadler> a s:Organization;
+  s:logo <http://www.stadlerrail.com/static/img/Stadler.jpg>;
+  s:name "Stadler";
+  s:legalName "Stadler Rail AG";
+.
+</script>
+
+<script type="text/javascript">
+$(function () {
+LD2h.expand().then(function () {
+console.log("finsihed expanding");
+});
+});
+</script>
+</head>
+
+<body>
+This will be replaced by rendered RDF.
+</body>
+</html>
