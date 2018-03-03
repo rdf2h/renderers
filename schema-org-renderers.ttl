@@ -12,6 +12,7 @@
     r2h:type s:Article;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>
       {{s:headline}}
       {{^+s:headline}}
@@ -28,6 +29,7 @@
     r2h:type s:CreativeWork;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>
       {{s:headline}}
       {{^+s:headline}}
@@ -45,6 +47,7 @@
     r2h:type s:Organization;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>Organization: <a href='{{.}}'>
         {{{:render . s:name}}}
       </a></h1>
@@ -55,6 +58,7 @@
     r2h:type s:Person;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>Person: <a href='{{.}}'>
         {{{:render . s:name}}}
       </a></h1>
@@ -202,6 +206,7 @@
     r2h:type s:Product;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>Product: <a href='{{.}}'>
         {{{:render . s:name}}}
       </a></h1>
@@ -213,6 +218,7 @@
     r2h:type s:ProductModel;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>ProductModel: <a href='{{.}}'>
         {{{:render . s:name}}}
       </a></h1>
@@ -224,6 +230,7 @@
     r2h:type s:SoftwareApplication;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>Application: <a href='{{.}}'>
         {{{:render . s:name}}}
       </a></h1>
@@ -235,6 +242,7 @@
     r2h:type s:Thing;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>Resource: <a href='{{.}}'>
         {{{:render . s:name}}}
       </a></h1>
@@ -245,6 +253,7 @@
     r2h:type s:WebApplication;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>Webapp: <a href='{{.}}'>
         {{{:render . s:name}}}
       </a></h1>
@@ -261,6 +270,7 @@
     r2h:type rdfs:Resource;
     r2h:context r2h:Default;
     r2h:mustache """
+      {{{@prefix s: <http://schema.org/>}}}
       <h1>Resource: <a href='{{.}}'>
         {{{:render . s:name}}}
       </a></h1>
