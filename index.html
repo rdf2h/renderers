@@ -1,44 +1,90 @@
+
 <!DOCTYPE html>
-<html class="render" resource="foo" context="http://rdf2h.github.io/2016/generic-rdf2h-Renderers/FullPage">
-<head>
-<title>This will be replaced when the data is loaded</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="renderers" href="schema-org-renderers.ttl" type="text/turtle" />
-<link rel="renderers" href="fallback-renderers.ttl" type="text/turtle" />
-<!-- <script src="https://rawgit.com/rdf2h/rdf2h/v2.0/output/js/rdf2h.js"></script> -->
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="https://rawgit.com/rdf2h/ld2h/v2.0/dist/ld2h.js"></script>
-<script id="data" type="text/turtle">
-  @prefix schema: <http://schema.org/> .
+<html class="render" resource="http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper" context="http://rdf2h.github.io/2016/generic-rdf2h-Renderers/FullPage">
+    <head>
+        <title>This will be replaced when the data is loaded</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="renderers" href="schema-org-renderers.ttl" type="text/turtle" />
+        <!-- <script src="https://rawgit.com/rdf2h/rdf2h/v2.0/output/js/rdf2h.js"></script> -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://rdf2h.github.io/ld2h/latest/ld2h.js"></script>
+        <script id="data" type="text/turtle">
+    @prefix s: <http://schema.org/> .        
+    <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper>
+        a                               <http://schema.org/Person> ;
+        <http://schema.org/additionalName>
+                "Lee"^^<http://www.w3.org/2001/XMLSchema#string> ;
+        s:address [
+		s:addressCountry "US";
+		s:addressLocality "Pasadena";
+		s:addressRegion "CA";
+		s:postalCode "91104";
+		s:streetAddress "2311 North Los Robles Avenue, Apartment 4A"
+        ];
+        s:gender s:male;
+        <http://schema.org/familyName>  "Cooper"^^<http://www.w3.org/2001/XMLSchema#string> ;
+        <http://schema.org/givenName>   "Sheldon"^^<http://www.w3.org/2001/XMLSchema#string> ;
+        <http://schema.org/jobTitle>    "theoretical physicist"^^<http://www.w3.org/2001/XMLSchema#string> ;
+        s:knows       <http://tbbt-ld.zazukoians.linked.guru/data/person/bernadette-rostenkowski> ; 
+        s:knows           <http://tbbt-ld.zazukoians.linked.guru/data/person/rajesh-koothrappali> ; 
+        s:knows           <http://tbbt-ld.zazukoians.linked.guru/data/person/leonard-hofstadter> ; 
+        s:knows           <http://tbbt-ld.zazukoians.linked.guru/data/person/amy-farrah-fowler> ; 
+        s:knows           <http://tbbt-ld.zazukoians.linked.guru/data/person/penny> ; 
+        s:knows           <http://tbbt-ld.zazukoians.linked.guru/data/person/howard-wolowitz> ;
+        <http://schema.org/parent>      <http://tbbt-ld.zazukoians.linked.guru/data/person/mary-cooper> .
 
-<foo>  a                 schema:Person ;
-  schema:address    [ a                       schema:PostalAddress ;
-                      schema:addressLocality  "Seattle" ;
-                      schema:addressRegion    "WA" ;
-                      schema:postalCode       "98052" ;
-                      schema:streetAddress    "20341 Whitworth Institute 405 N. Whitworth"
-                    ] ;
-  schema:colleague  <http://www.xyz.edu/students/bobsmith.html> , <http://www.xyz.edu/students/alicejones.html> ;
-  schema:email      "mailto:jane-doe@xyz.edu" ;
-  schema:image      <janedoe.jpg> ;
-  schema:jobTitle   "Professor" ;
-  schema:name       "Jane Doe" ;
-  schema:telephone  "(425) 123-4567" ;
-  schema:url        <http://www.janedoe.com>
-.
+<http://tbbt-ld.zazukoians.linked.guru/data/person/mary-cooper>
+        a s:Person;
+        s:familyName "Cooper";
+        s:givenName "Mary";
+        <http://schema.org/children>  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> ;
+        s:knows     <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/bernadette-rostenkowski>
+a s:Person;
+        s:knows  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/howard-wolowitz>
+a s:Person;
+        s:knows  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/rajesh-koothrappali>
+a s:Person;
+        s:knows  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> ;
+        s:givenName "Rajesh";
+        s:familyName "Koothrappali" .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/penny>
+a s:Person;
+        s:name "Penny" ;
+        s:knows  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> ;
+        <http://schema.org/spouse>  <http://tbbt-ld.zazukoians.linked.guru/data/person/leonard-hofstadter>.
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/leonard-hofstadter>
+a s:Person;
+        s:knows  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/stuart-bloom>
+a s:Person;
+        s:givenName "Stuart" ;
+        s:familyName "Bloom" ;
+        s:knows  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
+
+<http://tbbt-ld.zazukoians.linked.guru/data/person/amy-farrah-fowler>
+        a s:Person;
+        s:knows  <http://tbbt-ld.zazukoians.linked.guru/data/person/sheldon-cooper> .
 </script>
-
-<script type="text/javascript">
-    $(function () {
-        LD2h.expand().then(function () {
+            
+        <script type="text/javascript">
+$(function () {
+        LD2h.expand().then(function() { 
             console.log("finsihed expanding");
         });
-    });
-</script>
-</head>
-
-<body>
+});
+        </script>
+    </head>
+    <body>
 This will be replaced by rendered RDF.
-</body>
+    </body>
 </html>

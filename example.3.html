@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="render" resource="abb" context="http://rdf2h.github.io/2016/generic-rdf2h-Renderers/FullPage">
+<html class="render" resource="mutz" context="http://rdf2h.github.io/2016/generic-rdf2h-Renderers/FullPage">
 <head>
 <title>This will be replaced when the data is loaded</title>
 <meta charset="UTF-8">
@@ -8,7 +8,7 @@
 <link rel="renderers" href="fallback-renderers.ttl" type="text/turtle" />
 <!-- <script src="https://rawgit.com/rdf2h/rdf2h/v2.0/output/js/rdf2h.js"></script> -->
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="https://rawgit.com/rdf2h/ld2h/v2.0/dist/ld2h.js"></script>
+<script src="https://rdf2h.github.io/ld2h/latest/ld2h.js"></script>
 <script id="data" type="text/turtle">
 @prefix s: <http://schema.org/> .
 
@@ -34,6 +34,7 @@
 .
 
 <kiss> a s:Product;
+s:name "Stadler KISS";
 s:brand "KISS-Doppelstockzüge";
 s:manufacturer <stadler>;
 .
@@ -73,11 +74,11 @@ s:name "Train";
 </script>
 
 <script type="text/javascript">
-$(function () {
-LD2h.expand().then(function () {
-console.log("finsihed expanding");
-});
-});
+  $(function () {
+    LD2h.expand().then(function() { 
+      console.log("finsihed expanding");
+    });
+  });
 </script>
 </head>
 
