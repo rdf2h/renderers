@@ -12,14 +12,10 @@
     r2h:type rdfs:Resource;
     r2h:context r2h:Default;
     r2h:mustache """
-      <div class="sticky list-group" style="width: 100%;">
-          <h4 class="list-group-item-heading">Resource: <a href="{{.}}">{{.}}</a></h4>
-      </div>
+          <strong>Resource: <a href="{{.}}">{{.}}</a></strong>
       {{#+rdf:type}}
-      <div class="sticky list-group" style="width: 100%;">
-          <p class="list-group-item-text">is a {{#rdf:type}}<a href="{{.}}">{{.}}</a> {{/rdf:type}}</p>
+          is a {{#rdf:type}}<a href="{{.}}">{{.}}</a> {{/rdf:type}}
 		  <hr>
-      </div>
       {{/+rdf:type}}
       {{{:render . r2h:Default-Naked}}}""".
 
@@ -41,17 +37,14 @@
 <genericBody> a r2h:Renderer;
     r2h:type rdfs:Resource;
     r2h:context gt:HtmlBody;
-    r2h:mustache """<div id="header"></div>
-        {{{:render . r2h:Default}}}<div id="footer">
-
-        </div>""".
+    r2h:mustache """
+        {{{:render . r2h:Default}}}
+    """.
 
 <genericHead> a r2h:Renderer;
     r2h:type rdfs:Resource;
     r2h:context gt:HtmlHead;
     r2h:mustache """
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         {{{:render . gt:HtmlTitle}}}
     """.
 
@@ -59,7 +52,7 @@
     r2h:type rdfs:Resource;
     r2h:context gt:HtmlTitle;
     r2h:mustache """
-        <title>Resource {{.}}</title>
+        <title>Resource: {{.}}</title>
     """.
 
 <genericResource> a r2h:Renderer;
@@ -99,7 +92,7 @@
         var s = n.graph.match(node, undefined, undefined);
         if (s.length > 0) {
            env.renderedNodesToId[node.toString()] = true;
-           result += '<div class="container" id="'+node+'"><table width="100%">';
+           result += '<div id="'+node+'"><table width="100%">';
            s.forEach(function(t) {
             var objectHtml;
             var prefix = "";
@@ -126,13 +119,13 @@
             }
             predicatesArray.push(predicate);
 
-            result += '<tr><td width="35%" cellpadding=".1em" valign="top">'+
+            result += '<tr><td width="40%">'+
                 '<a href="'+predicate+'" title="'+predicate+'" style="color:#000000;text-decoration:none">'+
-                styleUri(predicate)+'</a></td><td width="65%" cellpadding=".1em">'+
-                objectHtml+'<hr /></td>';
+                styleUri(predicate)+'</a></td><td width="60%">'+
+                objectHtml+'</td>';
 
             });
-           result += '</table></div>';
+           result += '</table><hr></div>';
         };
         while (nodesToRender.length > 0) {
             var subNode = nodesToRender.pop();
