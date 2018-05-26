@@ -27,7 +27,7 @@
         if (n.termType == "NamedNode") {
             print("<a href=\\""+n.value+"\\">"+n.value+"</a>");
         } else {
-            print("<a>"+n.value+"</a>");
+            print("<a>"+n.node.toString()+"</a>");
         }
         """.
 
@@ -112,8 +112,8 @@
             if (t.object.termType !== "Literal") {
                 nodesToRender.push(t.object);
                 if (t.object.termType == "BlankNode") {
-                    objectHtml = '<div class="moving"></div><a onclick=\\'document.getElementById(\"'+
-                        t.object+'").scrollIntoView( true );\\'>'+t.object+'</a>';
+                    objectHtml = '<div class="moving"></div><a href="#" onclick=\\'document.getElementById(\"'+
+                        t.object+'").scrollIntoView( true );return false;\\'>'+t.object.toString()+'</a>';
                 } else {
                     var objectPrefix = "";
                     var object = t.object.value.replace(/&/g,"&amp;");
