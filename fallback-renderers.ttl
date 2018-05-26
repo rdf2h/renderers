@@ -12,12 +12,24 @@
     r2h:type rdfs:Resource;
     r2h:context r2h:Default;
     r2h:mustache """
-          <strong>Resource: <a href="{{.}}">{{.}}</a></strong>
+          <strong>Resource: {{{:render . r2h:Linked}}}</strong>
       {{#+rdf:type}}
           is a {{#rdf:type}}<a href="{{.}}">{{.}}</a> {{/rdf:type}}
 		  <hr>
       {{/+rdf:type}}
       {{{:render . r2h:Default-Naked}}}""".
+
+[] a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context r2h:Linked;
+    r2h:nomustache """<a href="{{.}}">{{.}}</a>""";
+    r2h:javaScript """
+        if (n.termType == "NamedNode") {
+            print("<a href=\\""+n.value+"\\">"+n.value+"</a>");
+        } else {
+            print("<a>"+n.value+"</a>");
+        }
+        """.
 
 <genericFullPage> a r2h:Renderer;
     r2h:type rdfs:Resource;
