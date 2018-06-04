@@ -1,0 +1,159 @@
+@base <http://rdf2h.github.io/generic-rdf2h-renderers/> .
+@prefix gt: <http://rdf2h.github.io/2016/generic-rdf2h-renderers/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix r2h: <http://rdf2h.github.io/2015/rdf2h#> .
+@prefix dc: <http://pns.org/dc/elements/1.1/>.
+@prefix s: <http://schema.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<header> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context r2h:Default;
+    r2h:mustache """
+          <strong>Resource: {{{:render . r2h:Linked}}}</strong>
+      {{#+rdf:type}}
+          is a {{#rdf:type}}<a href="{{.}}">{{.}}</a> {{/rdf:type}}
+		  <hr>
+      {{/+rdf:type}}
+      {{{:render . r2h:Default-Naked}}}""".
+
+[] a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context r2h:Linked;
+    r2h:nomustache """<a href="{{.}}">{{.}}</a>""";
+    r2h:javaScript """
+        if (n.termType == "NamedNode") {
+            print("<a href=\\""+n.value+"\\">"+n.value+"</a>");
+        } else {
+            print("<a>"+n.node.toString()+"</a>");
+        }
+        """.
+
+<genericFullPage> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    rdfs:comment """Renders a full page, delegating to renderers in the default 
+    context for the body, and to gt:HtmlHead for things like the html title""";
+    r2h:context gt:FullPage;
+    r2h:mustache """
+    {{{@prefix r2h: <http://rdf2h.github.io/2015/rdf2h#>}}}
+    {{{@prefix gt: <http://rdf2h.github.io/2016/generic-rdf2h-renderers/>}}}
+    <head>
+      {{{:render . gt:HtmlHead}}}
+    </head>
+    <body>
+      {{{:render . gt:HtmlBody}}}
+    </body>
+    """.
+<genericBody> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context gt:HtmlBody;
+    r2h:mustache """
+        {{{:render . r2h:Default}}}
+    """.
+
+<genericHead> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context gt:HtmlHead;
+    r2h:mustache """
+        {{{:render . gt:HtmlTitle}}}
+    """.
+
+<genericHtmlTitle> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context gt:HtmlTitle;
+    r2h:mustache """
+        <title>Resource: {{.}}</title>
+    """.
+
+<genericResource> a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context r2h:Default-Naked;
+    r2h:javaScript """
+        var prefixMappings = [{ns: "http://schema.org/", prefix: "s:"},
+                        {ns: "http://www.w3.org/1999/02/22-rdf-syntax-ns#", prefix: "rdf:"},
+                        {ns: "https://gont.ch/", prefix: "gont:"},
+                        {ns: "http://www.w3.org/2004/02/skos/core#", prefix: "skos:"},
+                        {ns: "http://www.w3.org/2002/07/owl#", prefix: "owl:"},
+                        {ns: "http://dbpedia.org/resource/", prefix: "dbr:"},
+                        {ns: "http://dbpedia.org/class/yago/", prefix: "yago:"},
+                        {ns: "http://xmlns.com/foaf/0.1/", prefix: "foaf:"},
+                        {ns: "http://www.wikidata.org/entity/", prefix: "wikidata:"},
+                        {ns: "http://dbpedia.org/ontology/", prefix: "dbo:"},
+                        {ns: "http://pns.org/dc/terms/", prefix: "dct:"},
+                        {ns: "http://www.w3.org/2000/01/rdf-schema#", prefix: "rdfs:"}];
+        function styleUri(uri) {
+            var mapping = prefixMappings.find(function(mappping) {
+                return uri.startsWith(mappping.ns);
+            });
+            if (mapping) {
+                return mapping.prefix+"<b>"+uri.substring(mapping.ns.length)+"</b>";
+            } else {
+                return uri;
+            }
+        }
+        var result = "";
+        var predicatesArray = [];
+        var nodesToRender = [];
+        //should rather attach this to something specific to this RDF2h invocation
+		if (!env.renderedNodesToId)  {
+			env.renderedNodesToId = new Object();
+		}
+        var node = n.node;
+        var s = n.graph.match(node, undefined, undefined);
+        if (s.length > 0) {
+           env.renderedNodesToId[node.toString()] = true;
+           result += '<div id="'+node+'"><table width="100%">';
+           s.forEach(function(t) {
+            var objectHtml;
+            var prefix = "";
+            var predicate = t.predicate.value;
+            if (t.object.termType !== "Literal") {
+                nodesToRender.push(t.object);
+                if (t.object.termType == "BlankNode") {
+                    objectHtml = '<div class="moving"></div><a href="#" onclick=\\'document.getElementById(\"'+
+                        t.object+'").scrollIntoView( true );return false;\\'>'+t.object.toString()+'</a>';
+                } else {
+                    var objectPrefix = "";
+                    var object = t.object.value.replace(/&/g,"&amp;");
+                    objectHtml = '<a href="'+object+'" title="'+object+'">'+styleUri(object)+'</a>';
+                }
+            } else {
+                objectHtml = t.object;
+            }
+            var isNew = true;
+            for (var i = 0; i < predicatesArray.length; i++) {
+                if (predicatesArray[i] === predicate) {
+                    isNew = false;
+                    break;
+                }
+            }
+            predicatesArray.push(predicate);
+
+            result += '<tr><td width="40%">'+
+                '<a href="'+predicate+'" title="'+predicate+'" style="color:#000000;text-decoration:none">'+
+                styleUri(predicate)+'</a></td><td width="60%">'+
+                objectHtml+'</td>';
+
+            });
+           result += '</table><hr></div>';
+        };
+        while (nodesToRender.length > 0) {
+            var subNode = nodesToRender.pop();
+            if ((n.graph.match(subNode, undefined, undefined).length > 0) && 
+                (!env.renderedNodesToId[subNode.toString()])) {
+		result += render(GraphNode(subNode, n.graph), $rdf.sym("http://rdf2h.github.io/2015/rdf2h#Default"));
+            }
+	}
+        console.log("getting subjects for"+node);
+        var backwardLinks = n.graph.match(undefined, undefined, node);
+        backwardLinks.forEach(function(t) {
+            var subjectNode = t.subject;
+            console.log(subjectNode);
+            if (!env.renderedNodesToId[subjectNode.toString()]) {
+                result += render(GraphNode(subjectNode, n.graph), $rdf.sym("http://rdf2h.github.io/2015/rdf2h#Default"));
+            }
+        })
+        return result;
+    """.
