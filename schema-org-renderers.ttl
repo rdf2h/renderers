@@ -344,7 +344,6 @@
         {{s:pagination}}
       {{/+s:pagination}}
 
-      <h3>An Article
       {{{:render . s:CreativeWork}}}
     """.
 
@@ -353,7 +352,7 @@
     r2h:context s:CreativeWork;
     r2h:mustache """
       {{#+s:about}}
-        about:</h3>
+        <h3>About:</h3>
         {{#s:about}}
           <div>
             {{{:render . r2h:Default}}}
