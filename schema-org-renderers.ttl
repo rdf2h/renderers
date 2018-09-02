@@ -284,16 +284,6 @@
       {{{:render . s:SoftwareApplication}}}
     """.
 
-<anything>  a r2h:Renderer;
-    r2h:type rdfs:Resource;
-    r2h:context r2h:Default;
-    r2h:mustache """
-      {{{@prefix s: <http://schema.org/>}}}
-      <h1>Resource: <a href='{{.}}'>
-        {{{:render . s:name}}}
-      </a></h1>
-    """.
-
 <address>  a r2h:Renderer;
     r2h:type rdfs:Resource;
     r2h:context s:address;
