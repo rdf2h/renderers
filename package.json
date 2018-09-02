@@ -16,7 +16,7 @@
     "pretest": "yarn build",
     "test": "node_modules/.bin/mocha"
   },
-  "repository": "https://github.com/rdf2h/ld2h.git",
+  "repository": "https://github.com/rdf2h/renderers.git",
   "keywords": [
     "rdf",
     "linked-data",
@@ -24,5 +24,5 @@
   ],
   "author": "Reto Gmür",
   "license": "MIT",
-  "homepage": "http://rdf2h.github.io/ld2h/"
+  "homepage": "http://rdf2h.github.io/renderers/"
 }
