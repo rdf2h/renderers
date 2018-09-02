@@ -13,7 +13,13 @@
           is a {{#rdf:type}}<a href="{{.}}">{{.}}</a> {{/rdf:type}}
 		  <hr>
       {{/+rdf:type}}
-      {{{:render . r2h:Default-Naked}}}""".
+      {{{:render . r2h:Default-Naked}}}
+      {{{:render . r2h:Tail}}}""".
+
+[] a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context r2h:Tail;
+    r2h:mustache "".
 
 [] a r2h:Renderer;
     r2h:type rdfs:Resource;

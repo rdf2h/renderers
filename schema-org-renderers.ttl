@@ -545,6 +545,8 @@
         <h3>URL:</h3>
         <a href='{{s:url}}'>{{s:url}}<a><br>
       {{/+s:url}}
+
+      {{{:render . r2h:Tail}}}
     """.
 
 <videoObject>  a r2h:Renderer;
