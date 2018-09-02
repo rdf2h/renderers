@@ -18,7 +18,8 @@ describe('RDF2h', function () {
           console.log("result: " + renderingResult);
           assert.equal(`
           <strong>Resource: <a href="http://example.org/">http://example.org/</a></strong>
-      <div id="http://example.org/"><table width="100%"><tr><td width="40%"><a href="http://dublincore.org/2012/06/14/dcelements#title" title="http://dublincore.org/2012/06/14/dcelements#title" style="color:#000000;text-decoration:none">http://dublincore.org/2012/06/14/dcelements#title</a></td><td width="60%">An example</td></table><hr></div>`, renderingResult);
+      <div id="http://example.org/"><table width="100%"><tr><td width="40%"><a href="http://dublincore.org/2012/06/14/dcelements#title" title="http://dublincore.org/2012/06/14/dcelements#title" style="color:#000000;text-decoration:none">http://dublincore.org/2012/06/14/dcelements#title</a></td><td width="60%">An example</td></table><hr></div>
+      `, renderingResult);
           done();
         });
       });
