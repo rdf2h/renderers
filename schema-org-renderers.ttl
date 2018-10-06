@@ -307,7 +307,7 @@
     r2h:type rdfs:Resource;
     r2h:context s:Article;
     r2h:mustache """
-      {{s:articleBody}}
+      {{{s:articleBody}}}
 
       {{#+s:articleSection}}
         <h3>In sections:</h3>
