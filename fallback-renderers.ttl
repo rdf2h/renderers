@@ -115,14 +115,14 @@
                 nodesToRender.push(t.object);
                 if (t.object.termType == "BlankNode") {
                     objectHtml = '<div class="moving"></div><a href="#" onclick=\\'document.getElementById(\"'+
-                        t.object+'").scrollIntoView( true );return false;\\'>'+t.object.toString()+'</a>';
+                        t.object+'").scrollIntoView( true );return false;\\'>'+t.object.value+'</a>';
                 } else {
                     var objectPrefix = "";
                     var object = t.object.value.replace(/&/g,"&amp;");
                     objectHtml = '<a href="'+object+'" title="'+object+'">'+styleUri(object)+'</a>';
                 }
             } else {
-                objectHtml = t.object;
+                objectHtml = t.object.value;
             }
             var isNew = true;
             for (var i = 0; i < predicatesArray.length; i++) {

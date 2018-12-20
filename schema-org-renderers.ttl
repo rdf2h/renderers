@@ -549,6 +549,11 @@
       {{{:render . r2h:Tail}}}
     """.
 
+[] a r2h:Renderer;
+    r2h:type rdfs:Resource;
+    r2h:context r2h:Tail;
+    r2h:mustache "".
+
 <videoObject>  a r2h:Renderer;
     r2h:type rdfs:Resource;
     r2h:context s:VideoObject;
