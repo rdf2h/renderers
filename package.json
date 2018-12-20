@@ -1,6 +1,6 @@
 {
   "name": "renderers",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Default renderers for RDF2h.",
   "devDependencies": {
     "cross-var": "^1.1.0",
