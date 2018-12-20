@@ -8,10 +8,11 @@
     "mocha": "^2.3.3",
     "ncp": "^2.0.0",
     "rdf2h": "^2.1.1",
-    "read-file": "^0.2.0"
+    "read-file": "^0.2.0",
+    "serve": "^10.1.1"
   },
   "scripts": {
-    "start": "webpack-dev-server --mode=development --hot --inline --content-base examples",
+    "start": "serve",
     "build": "mkdirp distribution/latest/ && ncp fallback-renderers.ttl distribution/latest/fallback-renderers.ttl && cross-var \"ncp distribution/latest distribution/$npm_package_version\"",
     "pretest": "yarn build",
     "test": "node_modules/.bin/mocha"
