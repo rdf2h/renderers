@@ -26,9 +26,13 @@
     r2h:context r2h:Linked;
     r2h:nomustache """<a href="{{.}}">{{.}}</a>""";
     r2h:javaScript """
-        if (n.termType == "NamedNode") {
+        console.log(n);
+        if (n.termType == "NamedNode" && n.value) {
             print("<a href=\\""+n.value+"\\">"+n.value+"</a>");
-        } else {
+        } else if (n.termType == "BlankNode" && n.value) {
+            print("<a>_:"+n.value+"</a>");
+        }else {
+            console.log(n);
             print("<a>"+n.node.toString()+"</a>");
         }
         """.
@@ -66,7 +70,7 @@
     r2h:type rdfs:Resource;
     r2h:context gt:HtmlTitle;
     r2h:mustache """
-        <title>Resource: {{.}}</title>
+        <title>Resource: {{{:render . r2h:Linked}}}</title>
     """.
 
 <genericResource> a r2h:Renderer;
@@ -95,6 +99,15 @@
                 return uri;
             }
         }
+        function stringify(n) {
+            if (n.termType === "NamedNode" && n.value) {
+                return n.value;
+            } else if (n.termType == "BlankNode" && n.value) {
+                return "_:" + n.value
+            } else {
+                return n.node.toString();
+            }
+        }
         var result = "";
         var predicatesArray = [];
         var nodesToRender = [];
@@ -106,7 +119,7 @@
         var s = n.graph.match(node, undefined, undefined);
         if (s.length > 0) {
            env.renderedNodesToId[node.toString()] = true;
-           result += '<div id="'+node+'"><table width="100%">';
+           result += '<div id="'+stringify(node)+'"><table width="100%">';
            s.forEach(function(t) {
             var objectHtml;
             var prefix = "";
@@ -115,7 +128,7 @@
                 nodesToRender.push(t.object);
                 if (t.object.termType == "BlankNode") {
                     objectHtml = '<div class="moving"></div><a href="#" onclick=\\'document.getElementById(\"'+
-                        t.object+'").scrollIntoView( true );return false;\\'>'+t.object.value+'</a>';
+                        stringify(t.object)+'").scrollIntoView( true );return false;\\'>'+stringify(t.object)+'</a>';
                 } else {
                     var objectPrefix = "";
                     var object = t.object.value.replace(/&/g,"&amp;");
