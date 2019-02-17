@@ -26,13 +26,11 @@
     r2h:context r2h:Linked;
     r2h:nomustache """<a href="{{.}}">{{.}}</a>""";
     r2h:javaScript """
-        console.log(n);
         if (n.termType == "NamedNode" && n.value) {
             print("<a href=\\""+n.value+"\\">"+n.value+"</a>");
         } else if (n.termType == "BlankNode" && n.value) {
             print("<a>_:"+n.value+"</a>");
         }else {
-            console.log(n);
             print("<a>"+n.node.toString()+"</a>");
         }
         """.
@@ -70,7 +68,7 @@
     r2h:type rdfs:Resource;
     r2h:context gt:HtmlTitle;
     r2h:mustache """
-        <title>Resource: {{{:render . r2h:Linked}}}</title>
+        <title>Resource: {{{.}}}</title>
     """.
 
 <genericResource> a r2h:Renderer;
@@ -116,9 +114,14 @@
 			env.renderedNodesToId = new Object();
 		}
         var node = n.node;
+        console.log("n:");
+        console.log(n);
+        debugger;
         var s = n.graph.match(node, undefined, undefined);
+        console.log("s:");
+        console.log(s);
         if (s.length > 0) {
-           env.renderedNodesToId[node.toString()] = true;
+           env.renderedNodesToId[stringify(node)] = true;
            result += '<div id="'+stringify(node)+'"><table width="100%">';
            s.forEach(function(t) {
             var objectHtml;
@@ -157,16 +160,16 @@
         while (nodesToRender.length > 0) {
             var subNode = nodesToRender.pop();
             if ((n.graph.match(subNode, undefined, undefined).length > 0) && 
-                (!env.renderedNodesToId[subNode.toString()])) {
+                (!env.renderedNodesToId[stringify(subNode)])) {
 		result += render(GraphNode(subNode, n.graph), $rdf.sym("http://rdf2h.github.io/2015/rdf2h#Default"));
             }
 	}
-        console.log("getting subjects for"+node);
+        console.log("getting subjects for "+stringify(node));
         var backwardLinks = n.graph.match(undefined, undefined, node);
         backwardLinks.forEach(function(t) {
             var subjectNode = t.subject;
             console.log(subjectNode);
-            if (!env.renderedNodesToId[subjectNode.toString()]) {
+            if (!env.renderedNodesToId[stringify(subjectNode)]) {
                 result += render(GraphNode(subjectNode, n.graph), $rdf.sym("http://rdf2h.github.io/2015/rdf2h#Default"));
             }
         })

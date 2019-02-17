@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="render" resource="https://schema.factsmission.com/citation" context="http://rdf2h.github.io/2016/generic-rdf2h-renderers/FullPage">
+
+<head>
+  <title>This will be replaced when the data is loaded</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="renderers" href="fallback-renderers.ttl" type="text/turtle" />
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <!--<script src="https://retog.github.io/ext-rdflib/0.2.1/rdf.js"></script>-->
+  <script src="https://retog.github.io/ext-rdflib/0.3.5/rdf.js"></script>
+  <script src="https://rdf2h.github.io/ld2h/2.1.2/ld2h.js"></script>
+
+  <script type="text/javascript">
+    try {
+      LD2h.expand().then(function () {
+        console.log("finished expanding");
+      });
+    } catch (e) {
+      navigator.sayswho = (function () {
+        var ua = navigator.userAgent,
+          tem,
+          M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+        if (/trident/i.test(M[1])) {
+          tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+          return 'IE ' + (tem[1] || '');
+        }
+        if (M[1] === 'Chrome') {
+          tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+          if (tem != null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+        }
+        M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+        if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+        return M.join(' ');
+      })();
+      var div = document.createElement("div");
+      var host = window.location.hostname;
+      var client = navigator.sayswho;
+      div.innerHTML = "<p>We at " +
+        host +
+        " value diversity and try to be as inclusive as possible by endorsing open standards to support all kind of devices and be accessible to people with different abilities." +
+        "</p><p> However it seems that we're experiencing a problem rendering this page correctly with " +
+        client +
+        ". The software running this site is fully open source, maybe you could help improving it to support your browser as well? Check out the " +
+        "<a href='https://github.com/linked-solutions/tlds'>TLDS</a>" +
+        " project.</p>";
+      div.style.backgroundColor = "#ffbbbb";
+      div.style.margin = "3px";
+      div.style.border = "2px solid grey";
+      div.style.padding = "15px";
+      div.style.fontSize = "1.2em";
+      document.body.insertBefore(div, document.body.firstChild);
+    }
+  </script>
+</head>
+
+<body>
+  Are ya f*cking with me?
+  <div id="data" type="text/html">
+    <div about='https://schema.factsmission.com/citation'>
+      <h1>https://schema.factsmission.com/citation</h1>
+      <table>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/2000/01/rdf-schema#range'>http://www.w3.org/2000/01/rdf-schema#range</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/2000/01/rdf-schema#range' resource='http://www.w3.org/2001/XMLSchema#string'
+              href='http://www.w3.org/2001/XMLSchema#string'>http://www.w3.org/2001/XMLSchema#string</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/2004/02/skos/core#prefLabel'>http://www.w3.org/2004/02/skos/core#prefLabel</a>
+          </td>
+          <td datatype='http://www.w3.org/1999/02/22-rdf-syntax-ns#langString' property='http://www.w3.org/2004/02/skos/core#prefLabel'>TBD</td>
+        </tr>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/2000/01/rdf-schema#domain'>http://www.w3.org/2000/01/rdf-schema#domain</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/2000/01/rdf-schema#domain' resource='_:0'>_:0</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/2000/01/rdf-schema#isDefinedBy'>http://www.w3.org/2000/01/rdf-schema#isDefinedBy</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/2000/01/rdf-schema#isDefinedBy' resource='https://schema.factsmission.com/'
+              href='https://schema.factsmission.com/'>https://schema.factsmission.com/</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/1999/02/22-rdf-syntax-ns#type'>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/1999/02/22-rdf-syntax-ns#type' resource='http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'
+              href='http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'>http://www.w3.org/1999/02/22-rdf-syntax-ns#Property</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div about='_:1'>
+      <h1>_:1</h1>
+      <table>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/1999/02/22-rdf-syntax-ns#first'>http://www.w3.org/1999/02/22-rdf-syntax-ns#first</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/1999/02/22-rdf-syntax-ns#first' resource='https://schema.factsmission.com/Dummy'
+              href='https://schema.factsmission.com/Dummy'>https://schema.factsmission.com/Dummy</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/1999/02/22-rdf-syntax-ns#rest'>http://www.w3.org/1999/02/22-rdf-syntax-ns#rest</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/1999/02/22-rdf-syntax-ns#rest' resource='http://www.w3.org/1999/02/22-rdf-syntax-ns#nil'
+              href='http://www.w3.org/1999/02/22-rdf-syntax-ns#nil'>http://www.w3.org/1999/02/22-rdf-syntax-ns#nil</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div about='_:0'>
+      <h1>_:0</h1>
+      <table>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/1999/02/22-rdf-syntax-ns#type'>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/1999/02/22-rdf-syntax-ns#type' resource='http://www.w3.org/2002/07/owl#Class'
+              href='http://www.w3.org/2002/07/owl#Class'>http://www.w3.org/2002/07/owl#Class</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/2002/07/owl#unionOf'>http://www.w3.org/2002/07/owl#unionOf</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/2002/07/owl#unionOf' resource='_:2'>_:2</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div about='_:2'>
+      <h1>_:2</h1>
+      <table>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/1999/02/22-rdf-syntax-ns#first'>http://www.w3.org/1999/02/22-rdf-syntax-ns#first</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/1999/02/22-rdf-syntax-ns#first' resource='https://schema.factsmission.com/Dummy'
+              href='https://schema.factsmission.com/Dummy'>https://schema.factsmission.com/Dummy</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href='http://www.w3.org/1999/02/22-rdf-syntax-ns#rest'>http://www.w3.org/1999/02/22-rdf-syntax-ns#rest</a>
+          </td>
+          <td>
+            <a property='http://www.w3.org/1999/02/22-rdf-syntax-ns#rest' resource='_:1'>_:1</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  This will be replaced by rendered RDF.
+</body>
+
+</html>
